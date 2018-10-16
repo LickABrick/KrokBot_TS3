@@ -1,0 +1,12 @@
+[TeamSpeak3]
+hostname =
+login_name =
+login_password =
+sid = 1
+nickname =
+
+[Ark Server]
+hostname =
+username =
+password =
+public_ip =
