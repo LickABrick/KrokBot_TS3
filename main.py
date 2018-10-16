@@ -45,9 +45,9 @@ def ark_get_serverstatus():
                 pass
             else:
                 ark_server_status = "offline"
-        elif "  OK  ] Monitor arkserver: Querying port: gsquery: 172.16.10.139:27015 : 0/1: OK" in result:
+        elif "  OK  ] Monitor arkserver: Querying port: gsquery: {}:27015 : 0/1: OK".format(config['Ark Server']['hostname']) in result:
             ark_server_status = "online"
-        elif "Monitor arkserver: Querying port: gsquery: 172.16.10.139:27015 : 10/1: WAIT" in result:
+        elif "Monitor arkserver: Querying port: gsquery: {}:27015 : 10/1: WAIT".format(config['Ark Server']['hostname']) in result:
             ark_server_status = "starting"
         else:
             ark_server_status = "error"
