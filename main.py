@@ -13,7 +13,7 @@ config.read('config.ini')
 def ark_ssh_exec(command):
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh_client.connect(hostname=config['Ark Server']['hostname'], username=config['Ark Server']['username'], password=config['Ark Server']['password'])
+    ssh_client.connect(hostname=config['Ark Server']['ip'], username=config['Ark Server']['username'], password=config['Ark Server']['password'])
     ssh_client.exec_command(command)
 
 
@@ -21,7 +21,7 @@ def ark_get_serverinfo():
     global ark_playercount
     global ark_server_status
     ark_server_status = "unknown"
-    server_address = (config['Ark Server']['hostname'], int(config['Ark Server']['query_port']))
+    server_address = (config['Ark Server']['ip'], int(config['Ark Server']['query_port']))
     while True:
         try:
             with valve.source.a2s.ServerQuerier(server_address) as server:
@@ -77,7 +77,7 @@ thread2 = Thread(target=ark_get_serveridletime, daemon=True)
 thread1.start()
 thread2.start()
 
-with ts3.query.TS3Connection(config['TeamSpeak3']['hostname']) as ts3conn:
+with ts3.query.TS3Connection(config['TeamSpeak3']['ip']) as ts3conn:
     # Note, that the client will wait for the response and raise a
     # **TS3QueryError** if the error id of the response is not 0.
     ts3conn.login(
