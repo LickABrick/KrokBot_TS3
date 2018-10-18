@@ -49,6 +49,7 @@ def ark_get_serverstatus():
         else:
             ark_server_status = "error"
         # print(ark_server_status)
+        ssh_client.close()
         time.sleep(10)
 
 
@@ -60,6 +61,7 @@ def ark_start_server():
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh_client.connect(hostname=hostname, username=username, password=password)
     ssh_client.exec_command(command)
+    ssh_client.close()
     # print("Ark Server has been started!")
 
 
@@ -69,6 +71,7 @@ def ark_stop_server():
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh_client.connect(hostname=hostname, username=username, password=password)
     ssh_client.exec_command(command)
+    ssh_client.close()
     # print("Ark Server has been stopped!")
 
 
@@ -84,8 +87,8 @@ def ark_get_serveridletime():
             if players_online > 0:
                 time_active = datetime.now()
             idle_time = datetime.now() - time_active
-            if idle_time > timedelta(hours=1, minutes=5):
-                print("Server has been idle for over 5 minutes now, stopping server")
+            if idle_time > timedelta(minutes=15):
+                print("Server has been idle for over 15 minutes now, stopping server")
                 ark_server_status = "offline"
                 Thread(target=ark_stop_server).start()
             time.sleep(30)
@@ -93,8 +96,8 @@ def ark_get_serveridletime():
             idle_time = "none"
 
 
-thread1 = Thread(target=ark_get_serverstatus)
-thread2 = Thread(target=ark_get_serveridletime)
+thread1 = Thread(target=ark_get_serverstatus, daemon=True)
+thread2 = Thread(target=ark_get_serveridletime, daemon=True)
 thread1.start()
 thread2.start()
 
