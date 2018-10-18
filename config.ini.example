@@ -1,12 +1,12 @@
 [TeamSpeak3]
-hostname =
+ip =
 login_name =
 login_password =
 sid = 1
 nickname =
 
 [Ark Server]
-hostname =
+ip =
 username =
 password =
-public_ip =
+query_port = 27015
