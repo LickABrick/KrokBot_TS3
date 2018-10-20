@@ -7,6 +7,6 @@ nickname =
 
 [Ark Server]
 ip =
-username =
+username = arkserver
 password =
 query_port = 27015
